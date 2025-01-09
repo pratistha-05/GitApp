@@ -25,14 +25,17 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="20sp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+/>
 
     <TextView
         android:id="@+id/tv_bio"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
-        android:text="No bio available" />
+        android:text="No bio available"
+        android:clickable="true"
+        android:focusable="true"/>
 
     <TextView
         android:id="@+id/tv_followers"

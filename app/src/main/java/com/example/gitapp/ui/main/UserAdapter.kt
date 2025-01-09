@@ -1,5 +1,7 @@
 package com.example.gitapp.ui.main
 
+import android.content.Intent
+import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -31,19 +33,25 @@ class UserAdapter(private var usersList: List<UserData>) : RecyclerView.Adapter<
   class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     private val avatarImageView: ImageView = itemView.findViewById(R.id.avatarImageView)
     private val usernameTextView: TextView = itemView.findViewById(R.id.tv_username)
-    private val bioTextView: TextView = itemView.findViewById(R.id.tv_bio)
+    private val githubURL: TextView = itemView.findViewById(R.id.tv_bio)
     private val followersTextView: TextView = itemView.findViewById(R.id.tv_followers)
     private val repositoriesTextView: TextView = itemView.findViewById(R.id.tv_repositories)
 
     fun bind(user: UserData) {
-      usernameTextView.text = user.login
-      bioTextView.text = user.bio ?: "No bio available"
+      usernameTextView.text = user.username
+      githubURL.text = user.githubURL ?: "No bio available"
       followersTextView.text = "Followers: ${user.followers}"
       repositoriesTextView.text = "Repositories: ${user.following}"
 
       Glide.with(itemView.context)
         .load(user.avatar_url)
+        .circleCrop()
         .into(avatarImageView)
+
+      githubURL.setOnClickListener {
+        val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/${user.githubURL}"))
+        itemView.context.startActivity(intent)
+      }
     }
   }
 }

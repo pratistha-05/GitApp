@@ -31,8 +31,8 @@ class UsersViewModel(private val repository: UserRepository) : ViewModel() {
 
               val enrichedUserData = UserData(
                 avatar_url = userDataItem.avatar_url,
-                login = userDataItem.login,
-                bio = userDataItem.html_url,
+                username = userDataItem.login,
+                githubURL = userDataItem.html_url,
                 followers = followersCount,
                 following =followingCount,
                 public_repos = userDataItem.score.toInt()
