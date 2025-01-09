@@ -37,24 +37,25 @@ class MainActivity : AppCompatActivity() {
     adapter = UserAdapter(emptyList())
     recyclerView.adapter = adapter
 
+
     viewModel.userList.observe(this, Observer { result ->
       when (result) {
         is Result.Loading -> {
-          // Show loading indicator
+          adapter.showLoading()
         }
         is Result.Success -> {
+          adapter.hideLoading()
           result.data?.let {
             if (currentPage == 1) {
               adapter.updateData(it)
             } else {
               adapter.appendData(it)
             }
-            adapter.notifyDataSetChanged()
           }
-          isLoading = false
         }
         is Result.Error -> {
-          // Show error message
+          //TODO: Handle error
+          adapter.hideLoading()
         }
       }
     })
