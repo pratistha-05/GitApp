@@ -12,8 +12,11 @@ interface ApiService {
 
   @GET("search/users")
   suspend fun searchUsers(
-    @Query("q") username: String
+    @Query("q") username: String,
+    @Query("per_page") perPage: Int,
+    @Query("page") page: Int
   ): Response<UserSearchResponse>
+
 
   @GET
   suspend fun getUserFollowersCount(@Url followersUrl: String): Response<List<Any>>

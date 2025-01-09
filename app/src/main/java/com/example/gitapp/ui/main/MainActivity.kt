@@ -11,12 +11,18 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.gitapp.R
 import com.example.gitapp.repository.UserRepository
 import com.example.gitapp.utils.Result
+
 class MainActivity : AppCompatActivity() {
 
   private lateinit var recyclerView: RecyclerView
   private lateinit var adapter: UserAdapter
   private lateinit var searchView: SearchView
   private lateinit var viewModel: UsersViewModel
+
+  private var currentPage = 1
+  private val perPage = 20
+  private var isLoading = false
+  private var currentQuery = ""
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -34,16 +40,21 @@ class MainActivity : AppCompatActivity() {
     viewModel.userList.observe(this, Observer { result ->
       when (result) {
         is Result.Loading -> {
-          // Show loading
+          // Show loading indicator
         }
         is Result.Success -> {
           result.data?.let {
-            adapter.updateData(it)
+            if (currentPage == 1) {
+              adapter.updateData(it)
+            } else {
+              adapter.appendData(it)
+            }
             adapter.notifyDataSetChanged()
           }
+          isLoading = false
         }
         is Result.Error -> {
-          // Show error
+          // Show error message
         }
       }
     })
@@ -51,12 +62,30 @@ class MainActivity : AppCompatActivity() {
     searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
       override fun onQueryTextSubmit(query: String?): Boolean {
         if (!query.isNullOrEmpty()) {
-          viewModel.searchUsers(query)
+          currentQuery = query
+          currentPage = 1
+          viewModel.searchUsers(currentQuery, currentPage, perPage)
         }
         return true
       }
 
       override fun onQueryTextChange(newText: String?): Boolean = true
     })
+
+    recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+      override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+        super.onScrolled(recyclerView, dx, dy)
+        val layoutManager = recyclerView.layoutManager as LinearLayoutManager
+        val totalItemCount = layoutManager.itemCount
+        val lastVisibleItem = layoutManager.findLastVisibleItemPosition()
+
+        if (!isLoading && totalItemCount <= (lastVisibleItem + 5)) {
+          currentPage++
+          isLoading = true
+          viewModel.searchUsers(currentQuery, currentPage, perPage)
+        }
+      }
+    })
   }
 }
+

@@ -14,11 +14,11 @@ class UsersViewModel(private val repository: UserRepository) : ViewModel() {
 
   val userList: MutableLiveData<Result<List<UserData>>> = MutableLiveData()
 
-  fun searchUsers(username: String) {
+  fun searchUsers(username: String,currentPage: Int,perPage: Int) {
     viewModelScope.launch {
       userList.postValue(Result.Loading())
 
-      val result = repository.searchUsers(username)
+      val result = repository.searchUsers(username,currentPage,perPage)
 
       when (result) {
         is Result.Success -> {

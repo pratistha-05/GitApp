@@ -28,6 +28,12 @@ class UserAdapter(private var usersList: List<UserData>) : RecyclerView.Adapter<
     usersList=userDataListItems
   }
 
+  fun appendData(newUsers: List<UserData>) {
+    val startPosition = usersList.size
+    usersList = usersList + newUsers
+    notifyItemRangeInserted(startPosition, newUsers.size)
+  }
+
   override fun getItemCount(): Int = usersList.size
 
   class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
