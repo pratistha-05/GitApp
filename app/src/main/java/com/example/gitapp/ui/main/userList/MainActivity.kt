@@ -1,7 +1,7 @@
-package com.example.gitapp.ui.main
+package com.example.gitapp.ui.main.userList
 
+import android.content.Intent
 import android.os.Bundle
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.Observer
@@ -9,7 +9,11 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.gitapp.R
+import com.example.gitapp.di.RetrofitInstance
+import com.example.gitapp.repository.RepoRepository
 import com.example.gitapp.repository.UserRepository
+import com.example.gitapp.ui.main.ViewModelFactory
+import com.example.gitapp.ui.main.userRepository.RepositoriesActivity
 import com.example.gitapp.utils.Result
 
 class MainActivity : AppCompatActivity() {
@@ -30,11 +34,20 @@ class MainActivity : AppCompatActivity() {
 
     recyclerView = findViewById(R.id.recyclerView)
     searchView = findViewById(R.id.search_view)
-    val repository = UserRepository()
-    viewModel = ViewModelProvider(this, ViewModelFactory(repository)).get(UsersViewModel::class.java)
+    val userRepository = UserRepository()
+    val repositoryRepository = RepoRepository(RetrofitInstance.api)
+
+    viewModel = ViewModelProvider(
+      this,
+      ViewModelFactory(userRepository, repositoryRepository)
+    ).get(UsersViewModel::class.java)
 
     recyclerView.layoutManager = LinearLayoutManager(this)
-    adapter = UserAdapter(emptyList())
+    adapter = UserAdapter(emptyList()) { username ->
+      val intent = Intent(this, RepositoriesActivity::class.java)
+      intent.putExtra("username", username)
+      startActivity(intent)
+    }
     recyclerView.adapter = adapter
 
 

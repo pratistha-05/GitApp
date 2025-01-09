@@ -1,4 +1,4 @@
-package com.example.gitapp.ui.main
+package com.example.gitapp.ui.main.userList
 
 
 import android.util.Log

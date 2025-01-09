@@ -1,5 +1,6 @@
 package com.example.gitapp.data.api
 
+import com.example.gitapp.data.model.RepoResponse
 import com.example.gitapp.data.model.UserData
 import com.example.gitapp.data.model.UserSearchResponse
 import retrofit2.Response
@@ -23,4 +24,9 @@ interface ApiService {
 
   @GET
   suspend fun getUserFollowingCount(@Url followingUrl: String): Response<List<Any>>
+
+  @GET("users/{username}/repos")
+  suspend fun getUserRepositories(
+    @Path("username") username: String
+  ): Response<List<RepoResponse>>
 }

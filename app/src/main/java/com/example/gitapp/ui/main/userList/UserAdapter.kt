@@ -1,4 +1,4 @@
-package com.example.gitapp.ui.main
+package com.example.gitapp.ui.main.userList
 
 import android.content.Intent
 import android.net.Uri
@@ -13,7 +13,9 @@ import com.example.gitapp.R
 import com.example.gitapp.data.model.UserData
 
 
-class UserAdapter(private var usersList: List<UserData>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class UserAdapter(private var usersList: List<UserData>,
+  private val onUserClick: (String) -> Unit
+) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
   companion object {
     private const val VIEW_TYPE_USER = 1
@@ -36,6 +38,9 @@ class UserAdapter(private var usersList: List<UserData>) : RecyclerView.Adapter<
     if (holder is ViewHolder) {
       val user = usersList[position]
       holder.bind(user)
+      holder.itemView.setOnClickListener {
+        onUserClick(user.username)
+      }
     }
   }
 
