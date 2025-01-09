@@ -55,10 +55,18 @@ class RepositoryAdapter(private var repoList: List<RepoResponse?>) : RecyclerVie
   }
 
   class RepositoryViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-    private val repoNameTextView: TextView = itemView.findViewById(R.id.tv_repo_name)
+    private val repoName: TextView = itemView.findViewById(R.id.tv_repo_name)
+    private val desc: TextView = itemView.findViewById(R.id.tv_repo_description)
+    private val repoLanguage: TextView = itemView.findViewById(R.id.tv_repo_language)
+    private val forkCount: TextView = itemView.findViewById(R.id.tv_repo_forks)
+    private val starsCount: TextView = itemView.findViewById(R.id.tv_repo_stars)
 
     fun bind(repository: RepoResponse) {
-      repoNameTextView.text = repository.name
+      repoName.text = repository.name
+      desc.text = repository.description ?: "No description available"
+      repoLanguage.text = repository.language ?: "Unknown Language"
+      forkCount.text = "Forks: ${repository.forks_count}"
+      starsCount.text = "Stars: ${repository.stargazers_count}"
     }
   }
 

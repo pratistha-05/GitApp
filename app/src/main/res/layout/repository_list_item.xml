@@ -2,12 +2,61 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:padding="16dp">
+    android:padding="16dp"
+    android:background="@android:color/white">
 
   <TextView
       android:id="@+id/tv_repo_name"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:textSize="18sp"
-      android:textStyle="bold" />
+      android:textStyle="bold"
+      android:text="fasdf"
+      android:textColor="@android:color/black"
+      android:paddingBottom="4dp" />
+
+  <TextView
+      android:id="@+id/tv_repo_description"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:textSize="14sp"
+      android:text="fasdf"
+      android:textColor="@android:color/darker_gray"
+      android:paddingBottom="4dp" />
+
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:orientation="horizontal"
+      android:gravity="start"
+      android:paddingTop="4dp">
+
+    <TextView
+        android:id="@+id/tv_repo_language"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingEnd="16dp"
+        android:textSize="12sp"
+        android:text="fasdf"
+        android:textColor="@android:color/holo_blue_dark" />
+
+    <TextView
+        android:id="@+id/tv_repo_forks"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingEnd="16dp"
+        android:textSize="12sp"
+        android:text="fasdf"
+        android:textColor="@android:color/black" />
+
+    <TextView
+        android:id="@+id/tv_repo_stars"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="12sp"
+        android:text="fasdf"
+        android:textColor="@android:color/black" />
+  </LinearLayout>
+
 </LinearLayout>
+
