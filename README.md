@@ -21,7 +21,8 @@ GitApp is an Android application that allows users to search for GitHub users an
 - **Coroutines**: Asynchronous programming with Kotlin's Coroutines.
 
 ## Setup
-1.  **Open the project in Android Studio:**After cloning the repository, open the project in Android Studio. You can do this by either:
+1.  **Open the project in Android Studio:**
+After cloning the repository, open the project in Android Studio. You can do this by either:
     
     *   Launching Android Studio, then selecting **Open** and navigating to the folder where you cloned the repository.
         
@@ -31,7 +32,7 @@ GitApp is an Android application that allows users to search for GitHub users an
     
     *   In your project root directory, create a new file named gradle.properties (if not already present).
         
-    *   propertiesCopy codeGITHUB\_AUTH\_TOKEN=your-github-token
+    *   properties : Copy code GITHUB\_AUTH\_TOKEN=your-github-token
         
 3.  **Sync Gradle:**
     
