@@ -1,10 +1,12 @@
 package com.example.gitapp.ui.main.userRepository
 
 import android.os.Bundle
+import android.view.View
+import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
-import androidx.compose.runtime.snapshots.Snapshot.Companion.observe
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.gitapp.R
@@ -23,22 +25,10 @@ class RepositoriesActivity : AppCompatActivity() {
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_repositories)
-
     val username = intent.getStringExtra("username") ?: return
 
-    recyclerView = findViewById(R.id.rv_repo_list)
-    recyclerView.layoutManager = LinearLayoutManager(this)
-
-    adapter = RepositoryAdapter(emptyList())
-    recyclerView.adapter = adapter
-
-    val userRepository = UserRepository()
-    val repositoryRepository = RepoRepository(RetrofitInstance.api)
-
-     viewModel = ViewModelProvider(
-      this,
-      ViewModelFactory(userRepository, repositoryRepository)
-    ).get(RepoViewModel::class.java)
+    initRecyclerView()
+    initViewModel()
 
     viewModel.repositoryList.observe(this, Observer { result ->
       when (result) {
@@ -53,12 +43,32 @@ class RepositoriesActivity : AppCompatActivity() {
           }
 
         is Result.Error -> {
-          //TODO: Handle error
           adapter.hideLoading()
+
         }
       }
     })
 
     viewModel.getUserRepositories(username)
+  }
+
+  private fun initRecyclerView(){
+    recyclerView = findViewById(R.id.rv_repo_list)
+    recyclerView.layoutManager = LinearLayoutManager(this)
+    val dividerItemDecoration = DividerItemDecoration(this, LinearLayoutManager.VERTICAL)
+    recyclerView.addItemDecoration(dividerItemDecoration)
+
+    adapter = RepositoryAdapter(emptyList())
+    recyclerView.adapter = adapter
+  }
+
+  private fun initViewModel(){
+    val userRepository = UserRepository()
+    val repositoryRepository = RepoRepository(RetrofitInstance.api)
+
+    viewModel = ViewModelProvider(
+      this,
+      ViewModelFactory(userRepository, repositoryRepository)
+    ).get(RepoViewModel::class.java)
   }
 }

@@ -80,13 +80,13 @@ class UserAdapter(private var usersList: List<UserData>,
     private val usernameTextView: TextView = itemView.findViewById(R.id.tv_username)
     private val githubURL: TextView = itemView.findViewById(R.id.tv_bio)
     private val followersTextView: TextView = itemView.findViewById(R.id.tv_followers)
-    private val repositoriesTextView: TextView = itemView.findViewById(R.id.tv_repositories)
+    private val followingTextView: TextView = itemView.findViewById(R.id.tv_following)
 
     fun bind(user: UserData) {
       usernameTextView.text = user.username
       githubURL.text = user.githubURL ?: "No bio available"
       followersTextView.text = "Followers: ${user.followers}"
-      repositoriesTextView.text = "Repositories: ${user.following}"
+      followingTextView.text = "Following: ${user.following}"
 
       Glide.with(itemView.context)
         .load(user.avatar_url)

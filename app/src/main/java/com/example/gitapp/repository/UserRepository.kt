@@ -12,6 +12,9 @@ class UserRepository() {
     return try {
       val response = RetrofitInstance.api.searchUsers(username, perPage, page)
       if (response.isSuccessful) {
+        if(response.body()?.total_count==0)
+          Result.Error("No users found")
+        else
         Result.Success(response.body()?.items ?: emptyList())
       } else {
         Result.Error("Failed to fetch users")

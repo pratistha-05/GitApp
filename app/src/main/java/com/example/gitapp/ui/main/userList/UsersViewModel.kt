@@ -47,8 +47,11 @@ class UsersViewModel(private val repository: UserRepository) : ViewModel() {
           userList.postValue(Result.Success(enrichedData ?: emptyList()))
         }
         is Result.Error -> {
-          userList.postValue(Result.Error("exception"))
-        }
+          if (result.message == "No users found") {
+            userList.postValue(Result.Error("No users found"))
+          } else {
+            userList.postValue(Result.Error(result.message ?: "Unknown Error"))
+          }        }
         else -> {
           userList.postValue(Result.Error("Unknown Error"))
         }

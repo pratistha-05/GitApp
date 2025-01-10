@@ -14,12 +14,17 @@ android {
     targetSdk = 34
     versionCode = 1
     versionName = "1.0"
+    buildConfigField ("String", "AUTH_TOKEN", "\"${project.findProperty("GITHUB_AUTH_TOKEN") ?: ""}\"")
 
     testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
   }
 
   buildTypes {
+    debug {
+      buildConfigField ("String", "AUTH_TOKEN", "\"${project.findProperty("GITHUB_AUTH_TOKEN") ?: ""}\"")
+    }
     release {
+      buildConfigField ("String", "AUTH_TOKEN", "\"${project.findProperty("GITHUB_AUTH_TOKEN") ?: ""}\"")
       isMinifyEnabled = false
       proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
     }
@@ -32,6 +37,7 @@ android {
     jvmTarget = "11"
   }
   buildFeatures {
+    buildConfig = true
     compose = true
   }
 }
@@ -50,6 +56,7 @@ dependencies {
   implementation(libs.material)
   implementation(libs.androidx.activity)
   implementation(libs.androidx.constraintlayout)
+  implementation(libs.androidx.swiperefreshlayout)
   testImplementation(libs.junit)
   androidTestImplementation(libs.androidx.junit)
   androidTestImplementation(libs.androidx.espresso.core)
