@@ -14,7 +14,6 @@ GitApp is an Android application that allows users to search for GitHub users an
 ## Tech Stack
 
 - **Kotlin**: Programming language used for the app.
-- **Jetpack Compose**: UI framework for building the user interface.
 - **Retrofit**: Networking library to make API calls to GitHub.
 - **ViewModel**: Architecture component for managing UI-related data.
 - **LiveData**: Reactive data holders for managing UI updates.
